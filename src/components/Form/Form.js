@@ -34,7 +34,7 @@ const Form = ({ currentId, setCurrentId }) => {
     }, [post])
 
     if(!user?.result.name){
-        return(<Paper className={classes.paper}>
+        return(<Paper className={classes.paper} >
             <Typography variant="h6" align='center'>
                 Please Sign In to create your own memories and like other's memories.
             </Typography>
@@ -43,7 +43,7 @@ const Form = ({ currentId, setCurrentId }) => {
     }
 
     return (<>
-        <Paper className={classes.paper}>
+        <Paper className={classes.paper} elevation={6}>
             <form className={classes.form} autoComplete='off' noValidate onSubmit={handleSubmit}>
                 <Typography variant='h6'>{currentId ? "Editing" : "Creating"} a Memory</Typography>
                 {/* <TextField name='creator' variant='outlined' label="Creator" fullWidth value={postData.creator} onChange={(e) => setPostData({ ...postData, creator: e.target.value })} /> */}

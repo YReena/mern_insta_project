@@ -14,7 +14,7 @@ function App() {
   return (
     <>
     <BrowserRouter>
-    <Container maxidth="lg">
+    <Container maxWidth="xl">
     <Navbar/>
     <Routes>
       <Route path='/' exact element={<Navigate to="/posts" />}/>

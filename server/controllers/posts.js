@@ -2,14 +2,36 @@ const mongoose = require('mongoose');
 const { PostMessage } = require('../model/postMessage');
 
 
-const getpost= async(req,res)=>{
+const getposts= async(req,res)=>{
     try{
-        const postMessages =  await PostMessage.find();
-        console.log(postMessages);
-        res.status(200).json(postMessages);
+        const {page} = req.query;
+        console.log("ritugggg");
+        console.log(page);
+        const LIMIT = 8;
+        const startIndex = (Number(page)-1)*LIMIT;
+
+        const total = await PostMessage.countDocuments({});
+
+        const posts = await PostMessage.find().sort({_id:-1}).limit(LIMIT).skip(startIndex);
+
+        console.log("nye");
+        res.status(200).json({data : posts, currentPage: Number(page), numberOfPage:Math.ceil(total/LIMIT)});
     }
     catch(error){
      //res.send(404).json({"messsage":error.message});
+    }
+}
+module.exports.getposts=getposts;
+
+const getpost= async(req,res)=>{
+    try{
+       const {id} = req.params;
+        const post = await PostMessage.findById(id);
+        console.log("ji");
+        res.status(200).json(post);
+    }
+    catch(error){
+     res.status(404).json({"messsage":error.message});
     }
 }
 module.exports.getpost=getpost;
@@ -79,3 +101,23 @@ const LikePost = async(req,res)=>{
     res.status(201).json(updatePost);
 }
 module.exports.LikePost= LikePost;
+
+const getPostsBySearch= async(req,res)=>{
+    const {searchQuery, tags} = req.body;
+    console.log("ritu2");
+    console.log(typeof(req.body.search));
+    const a =  tags.split(',');
+    console.log(a);
+
+    try{
+        // const title = new RegExp(req.body.search,'i');
+        // console.log(title);
+        const posts = await PostMessage.find({"$or":[{ "title": { "$regex": req.body.search, "$options": "i" } },{tags:{"$in" :a}}]});
+        console.log(posts);
+        res.status(200).json({data:posts});
+    }
+    catch(error){
+     res.status(401).json({"messsage":error});
+    }
+}
+module.exports.getPostsBySearch= getPostsBySearch;

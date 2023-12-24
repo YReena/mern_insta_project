@@ -1,9 +1,12 @@
 const express = require('express');
-const {getpost,createpost, updatePost, deletePost, LikePost} = require('../controllers/posts');
+const {getpost,getposts, createpost, updatePost, deletePost, LikePost,getPostsBySearch } = require('../controllers/posts');
 const router = express.Router();
 const { auth } = require('../middleware/auth');
 
-router.get('/', getpost);
+router.get('/', getposts);
+router.get('/:id', getpost);
+
+router.post('/search', getPostsBySearch);
 router.post('/',auth, createpost);
 router.patch('/:id',auth, updatePost);
 router.delete('/:id', auth,deletePost);

@@ -21,21 +21,20 @@ const Navbar = () => {
        }
 useEffect(() => {
     const token = user?.token;
-
     setUser(JSON.parse(localStorage.getItem('profile')))
 }, [location])
 return (<>
-    <AppBar className={classes.appBar} position="static" color="inherit">
-        <div>
+    <AppBar className={classes.appBar} position="static" color="inherit" >
+        <div className={classes.brandContainer}>
             <Typography component={Link} to='/' className={classes.heading} variant="h2" align="center">Memories</Typography>
             <img className={classes.images} src="https://raw.githubusercontent.com/adrianhajdin/project_mern_memories/master/client/src/images/memories.png?token=AF56X74XONEUGZ4FD2FUIA27UURPI" alt="memoriies" height="60" />
         </div>
-        <Toolbar className=''>
+        <Toolbar className={classes.toolbar}>
             {user ? (
-                <div className=''>
-                    <Avatar className={classes.purple} alt={user.result.name} src={user.result.imageUrl}>{user.result.profile}</Avatar>
-                    <Typography className='' variant="h6">{user.result.name}</Typography>
-                    <Button variant="contained" className='' color="secondary" onClick={logout}>LogOut</Button>
+                <div className={classes.profile}>
+                    <Avatar className={classes.profile} alt={user.result.name} src={user.result.imageUrl}>{user.result.profile}</Avatar>
+                    <Typography className={classes.name} variant="h6">{user.result.name}</Typography>
+                    <Button variant="contained" className={classes.logout} color="secondary" onClick={logout}>LogOut</Button>
                 </div>
             ) :
                 (
